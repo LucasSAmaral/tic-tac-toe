@@ -1,8 +1,40 @@
 import { useState } from "react";
 import styled from "styled-components";
-import TicTacToeOption from "./components/tic-tac-toe-option.component";
+import TicTacToeSquare from "./components/tic-tac-toe-square.component";
 
 export type Turn = "X" | "O";
+
+export type TicTacToeSquareProps = {
+  turn: Turn;
+  setTurn: React.Dispatch<React.SetStateAction<Turn>>;
+  possiblePositions: PossiblePosition[];
+  firstRow?: [] | Turn[];
+  setFirstRow?: React.Dispatch<React.SetStateAction<[] | Turn[]>>;
+  secondRow?: [] | Turn[];
+  setSecondRow?: React.Dispatch<React.SetStateAction<[] | Turn[]>>;
+  thirdRow?: [] | Turn[];
+  setThirdRow?: React.Dispatch<React.SetStateAction<[] | Turn[]>>;
+  firstColumn?: [] | Turn[];
+  setFirstColumn?: React.Dispatch<React.SetStateAction<[] | Turn[]>>;
+  secondColumn?: [] | Turn[];
+  setSecondColumn?: React.Dispatch<React.SetStateAction<[] | Turn[]>>;
+  thirdColumn?: [] | Turn[];
+  setThirdColumn?: React.Dispatch<React.SetStateAction<[] | Turn[]>>;
+  firstDiagonal?: [] | Turn[];
+  setFirstDiagonal?: React.Dispatch<React.SetStateAction<[] | Turn[]>>;
+  secondDiagonal?: [] | Turn[];
+  setSecondDiagonal?: React.Dispatch<React.SetStateAction<[] | Turn[]>>;
+};
+
+type PossiblePosition =
+  | "firstRow"
+  | "secondRow"
+  | "thirdRow"
+  | "firstColumn"
+  | "secondColumn"
+  | "thirdColumn"
+  | "firstDiagonal"
+  | "secondDiagonal";
 
 const TicTacToe: React.FC = () => {
   const [turn, setTurn] = useState<Turn>("X");
@@ -15,90 +47,116 @@ const TicTacToe: React.FC = () => {
   const [firstDiagonal, setFirstDiagonal] = useState<Turn[] | []>([]);
   const [secondDiagonal, setSecondDiagonal] = useState<Turn[] | []>([]);
 
-  const ticTacToeOptions = [
+  const changeTurn = {
+    turn,
+    setTurn,
+  };
+
+  const firstRowProps = {
+    firstRow,
+    setFirstRow,
+  };
+
+  const secondRowProps = {
+    secondRow,
+    setSecondRow,
+  };
+
+  const thirdRowProps = {
+    thirdRow,
+    setThirdRow,
+  };
+
+  const firstColumnProps = {
+    firstColumn,
+    setFirstColumn,
+  };
+
+  const secondColumnProps = {
+    secondColumn,
+    setSecondColumn,
+  };
+
+  const thirdColumnProps = {
+    thirdColumn,
+    setThirdColumn,
+  };
+
+  const firstDiagonalProps = {
+    firstDiagonal,
+    setFirstDiagonal,
+  };
+
+  const secondDiagonalProps = {
+    secondDiagonal,
+    setSecondDiagonal,
+  };
+
+  const ticTacToeSquaresProps: TicTacToeSquareProps[] = [
     {
-      turn,
-      setTurn,
-      firstRow,
-      setFirstRow,
-      firstColumn,
-      setFirstColumn,
-      firstDiagonal,
-      setFirstDiagonal,
+      possiblePositions: ["firstRow", "firstColumn", "firstDiagonal"],
+      ...changeTurn,
+      ...firstRowProps,
+      ...firstColumnProps,
+      ...firstDiagonalProps,
     },
     {
-      turn,
-      setTurn,
-      firstRow,
-      setFirstRow,
-      secondColumn,
-      setSecondColumn,
+      possiblePositions: ["firstRow", "secondColumn"],
+      ...changeTurn,
+      ...firstRowProps,
+      ...secondColumnProps,
     },
     {
-      turn,
-      setTurn,
-      firstRow,
-      setFirstRow,
-      thirdColumn,
-      setThirdColumn,
-      secondDiagonal,
-      setSecondDiagonal,
+      possiblePositions: ["firstRow", "thirdColumn", "secondDiagonal"],
+      ...changeTurn,
+      ...firstRowProps,
+      ...thirdColumnProps,
+      ...secondDiagonalProps,
     },
     {
-      turn,
-      setTurn,
-      secondRow,
-      setSecondRow,
-      firstColumn,
-      setFirstColumn,
+      possiblePositions: ["secondRow", "firstColumn"],
+      ...changeTurn,
+      ...secondRowProps,
+      ...firstColumnProps,
     },
     {
-      turn,
-      setTurn,
-      secondRow,
-      setSecondRow,
-      secondColumn,
-      setSecondColumn,
-      firstDiagonal,
-      setFirstDiagonal,
-      secondDiagonal,
-      setSecondDiagonal,
+      possiblePositions: [
+        "secondRow",
+        "secondColumn",
+        "firstDiagonal",
+        "secondDiagonal",
+      ],
+      ...changeTurn,
+      ...secondRowProps,
+      ...secondColumnProps,
+      ...firstDiagonalProps,
+      ...secondDiagonalProps,
     },
     {
-      turn,
-      setTurn,
-      secondRow,
-      setSecondRow,
-      thirdColumn,
-      setThirdColumn,
+      possiblePositions: ["secondRow", "thirdColumn"],
+      ...changeTurn,
+      ...secondRowProps,
+      ...thirdColumnProps,
     },
     {
-      turn,
-      setTurn,
-      thirdRow,
-      setThirdRow,
-      firstColumn,
-      setFirstColumn,
-      secondDiagonal,
-      setSecondDiagonal,
+      possiblePositions: ["thirdRow", "firstColumn", "secondDiagonal"],
+      ...changeTurn,
+      ...thirdRowProps,
+      ...firstColumnProps,
+      ...secondDiagonalProps,
     },
     {
-      turn,
-      setTurn,
-      thirdRow,
-      setThirdRow,
-      secondColumn,
-      setSecondColumn,
+      possiblePositions: ["thirdRow", "secondColumn"],
+      ...changeTurn,
+      ...thirdRowProps,
+      ...secondColumnProps,
     },
     {
-      turn,
-      setTurn,
-      thirdRow,
-      setThirdRow,
-      thirdColumn,
-      setThirdColumn,
-      firstDiagonal,
-      setFirstDiagonal,
+      possiblePositions: ["thirdRow", "thirdColumn", "firstDiagonal"],
+      ...changeTurn,
+      ...thirdRowProps,
+      ...thirdColumnProps,
+      ...firstDiagonalProps,
     },
   ];
 
@@ -114,8 +172,8 @@ const TicTacToe: React.FC = () => {
   return (
     <TicTacToeWrapper>
       <TicTacToeArea>
-        {ticTacToeOptions.map((ticTacToeOption, index) => (
-          <TicTacToeOption key={index} {...ticTacToeOption} />
+        {ticTacToeSquaresProps.map((ticTacToeSquareProps, index) => (
+          <TicTacToeSquare key={index} {...ticTacToeSquareProps} />
         ))}
       </TicTacToeArea>
     </TicTacToeWrapper>
