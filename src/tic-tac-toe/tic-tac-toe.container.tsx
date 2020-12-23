@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import TicTacToeSquare from "./components/tic-tac-toe-square.component";
 
@@ -8,6 +8,7 @@ export type TicTacToeSquareProps = {
   turn: Turn;
   setTurn: React.Dispatch<React.SetStateAction<Turn>>;
   possiblePositions: PossiblePosition[];
+  allTheSame: PossiblePosition | "";
   firstRow?: [] | Turn[];
   setFirstRow?: React.Dispatch<React.SetStateAction<[] | Turn[]>>;
   secondRow?: [] | Turn[];
@@ -26,7 +27,7 @@ export type TicTacToeSquareProps = {
   setSecondDiagonal?: React.Dispatch<React.SetStateAction<[] | Turn[]>>;
 };
 
-type PossiblePosition =
+export type PossiblePosition =
   | "firstRow"
   | "secondRow"
   | "thirdRow"
@@ -35,6 +36,10 @@ type PossiblePosition =
   | "thirdColumn"
   | "firstDiagonal"
   | "secondDiagonal";
+
+const isAllTheSameValue = (array: Turn[]) => {
+  return array.every((v) => v === array[0]);
+};
 
 const TicTacToe: React.FC = () => {
   const [turn, setTurn] = useState<Turn>("X");
@@ -46,10 +51,76 @@ const TicTacToe: React.FC = () => {
   const [thirdColumn, setThirdColumn] = useState<Turn[] | []>([]);
   const [firstDiagonal, setFirstDiagonal] = useState<Turn[] | []>([]);
   const [secondDiagonal, setSecondDiagonal] = useState<Turn[] | []>([]);
+  const [allTheSame, setAllTheSame] = useState<PossiblePosition | "">("");
 
-  const changeTurn = {
+  useEffect(() => {
+    if (firstRow.length === 3) {
+      if (isAllTheSameValue(firstRow)) {
+        setAllTheSame("firstRow");
+      }
+    }
+  }, [firstRow]);
+
+  useEffect(() => {
+    if (secondRow.length === 3) {
+      if (isAllTheSameValue(secondRow)) {
+        setAllTheSame("secondRow");
+      }
+    }
+  }, [secondRow]);
+
+  useEffect(() => {
+    if (thirdRow.length === 3) {
+      if (isAllTheSameValue(thirdRow)) {
+        setAllTheSame("thirdRow");
+      }
+    }
+  }, [thirdRow]);
+
+  useEffect(() => {
+    if (firstColumn.length === 3) {
+      if (isAllTheSameValue(firstColumn)) {
+        setAllTheSame("firstColumn");
+      }
+    }
+  }, [firstColumn]);
+
+  useEffect(() => {
+    if (secondColumn.length === 3) {
+      if (isAllTheSameValue(secondColumn)) {
+        setAllTheSame("secondColumn");
+      }
+    }
+  }, [secondColumn]);
+
+  useEffect(() => {
+    if (thirdColumn.length === 3) {
+      if (isAllTheSameValue(thirdColumn)) {
+        setAllTheSame("thirdColumn");
+      }
+    }
+  }, [thirdColumn]);
+
+  useEffect(() => {
+    if (firstDiagonal.length === 3) {
+      if (isAllTheSameValue(firstDiagonal)) {
+        setAllTheSame("firstDiagonal");
+      }
+    }
+  }, [firstDiagonal]);
+
+  useEffect(() => {
+    if (secondDiagonal.length === 3) {
+      if (isAllTheSameValue(secondDiagonal)) {
+        setAllTheSame("secondDiagonal");
+      }
+    }
+  }, [secondDiagonal]);
+
+  const mandatoryProps = {
     turn,
     setTurn,
+    allTheSame,
   };
 
   const firstRowProps = {
@@ -95,27 +166,27 @@ const TicTacToe: React.FC = () => {
   const ticTacToeSquaresProps: TicTacToeSquareProps[] = [
     {
       possiblePositions: ["firstRow", "firstColumn", "firstDiagonal"],
-      ...changeTurn,
+      ...mandatoryProps,
       ...firstRowProps,
       ...firstColumnProps,
       ...firstDiagonalProps,
     },
     {
       possiblePositions: ["firstRow", "secondColumn"],
-      ...changeTurn,
+      ...mandatoryProps,
       ...firstRowProps,
       ...secondColumnProps,
     },
     {
       possiblePositions: ["firstRow", "thirdColumn", "secondDiagonal"],
-      ...changeTurn,
+      ...mandatoryProps,
       ...firstRowProps,
       ...thirdColumnProps,
       ...secondDiagonalProps,
     },
     {
       possiblePositions: ["secondRow", "firstColumn"],
-      ...changeTurn,
+      ...mandatoryProps,
       ...secondRowProps,
       ...firstColumnProps,
     },
@@ -126,7 +197,7 @@ const TicTacToe: React.FC = () => {
         "firstDiagonal",
         "secondDiagonal",
       ],
-      ...changeTurn,
+      ...mandatoryProps,
       ...secondRowProps,
       ...secondColumnProps,
       ...firstDiagonalProps,
@@ -134,40 +205,31 @@ const TicTacToe: React.FC = () => {
     },
     {
       possiblePositions: ["secondRow", "thirdColumn"],
-      ...changeTurn,
+      ...mandatoryProps,
       ...secondRowProps,
       ...thirdColumnProps,
     },
     {
       possiblePositions: ["thirdRow", "firstColumn", "secondDiagonal"],
-      ...changeTurn,
+      ...mandatoryProps,
       ...thirdRowProps,
       ...firstColumnProps,
       ...secondDiagonalProps,
     },
     {
       possiblePositions: ["thirdRow", "secondColumn"],
-      ...changeTurn,
+      ...mandatoryProps,
       ...thirdRowProps,
       ...secondColumnProps,
     },
     {
       possiblePositions: ["thirdRow", "thirdColumn", "firstDiagonal"],
-      ...changeTurn,
+      ...mandatoryProps,
       ...thirdRowProps,
       ...thirdColumnProps,
       ...firstDiagonalProps,
     },
   ];
-
-  console.log("firstRow", firstRow);
-  console.log("secondRow", secondRow);
-  console.log("thirdRow", thirdRow);
-  console.log("firstColumn", firstColumn);
-  console.log("secondColumn", secondColumn);
-  console.log("thirdColumn", thirdColumn);
-  console.log("firstDiagonal", firstDiagonal);
-  console.log("secondDiagonal", secondDiagonal);
 
   return (
     <TicTacToeWrapper>

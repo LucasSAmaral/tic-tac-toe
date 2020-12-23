@@ -1,6 +1,10 @@
 import { useState } from "react";
 import styled, { css } from "styled-components";
-import { TicTacToeSquareProps, Turn } from "../tic-tac-toe.container";
+import {
+  PossiblePosition,
+  TicTacToeSquareProps,
+  Turn,
+} from "../tic-tac-toe.container";
 
 type ClickHandlerObjectParam = {
   choosenCharacter: Turn | "";
@@ -8,11 +12,7 @@ type ClickHandlerObjectParam = {
   TicTacToeProps: TicTacToeSquareProps;
 };
 
-// const isAllTheSameValue = (array: Turn[]) => {
-//   return array.every((v) => v === array[0]);
-// };
-
-const gameSetHandler = (TicTacToeProps: TicTacToeSquareProps) => {
+const setPositionHandler = (TicTacToeProps: TicTacToeSquareProps) => {
   if (TicTacToeProps.setFirstRow && TicTacToeProps.firstRow) {
     TicTacToeProps.setFirstRow([
       ...TicTacToeProps.firstRow,
@@ -83,7 +83,7 @@ const clickHandler = ({
       setChoosenCharacter("O");
       TicTacToeProps.setTurn("X");
     }
-    gameSetHandler(TicTacToeProps);
+    setPositionHandler(TicTacToeProps);
   }
 };
 
@@ -91,32 +91,36 @@ const TicTacToeSquare: React.FC<TicTacToeSquareProps> = ({
   ...TicTacToeProps
 }) => {
   const [choosenCharacter, setChoosenCharacter] = useState<Turn | "">("");
-  const [allTheSame, setAllTheSame] = useState(false);
   const clickHandlerParams = {
     choosenCharacter,
     setChoosenCharacter,
     TicTacToeProps,
-    setAllTheSame,
   };
   return (
     <TicTacToeOptionWrapper
-      allTheSame={allTheSame}
-      onClick={() => clickHandler(clickHandlerParams)}
+      allTheSame={TicTacToeProps.allTheSame}
+      possiblePositions={TicTacToeProps.possiblePositions}
+      onClick={() =>
+        TicTacToeProps.allTheSame === "" && clickHandler(clickHandlerParams)
+      }
     >
       <h2>{choosenCharacter}</h2>
     </TicTacToeOptionWrapper>
   );
 };
 
-const TicTacToeOptionWrapper = styled.div<{ allTheSame: boolean }>`
+const TicTacToeOptionWrapper = styled.div<{
+  allTheSame: PossiblePosition | "";
+  possiblePositions: PossiblePosition[];
+}>`
   cursor: pointer;
   border: 1px solid black;
   display: flex;
   align-items: center;
   height: 166px;
 
-  ${({ allTheSame }) =>
-    allTheSame
+  ${({ allTheSame, possiblePositions }) =>
+    allTheSame && possiblePositions.includes(allTheSame)
       ? css`
           background-color: green;
           color: white;
