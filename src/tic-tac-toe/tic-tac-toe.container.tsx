@@ -104,7 +104,7 @@ const TicTacToe: React.FC = () => {
     });
   }, [state]);
 
-  const mandatoryProps = {
+  const squareProps = {
     turn,
     setTurn,
     dispatch,
@@ -114,19 +114,19 @@ const TicTacToe: React.FC = () => {
   const ticTacToeSquares: TicTacToeSquareProps[] = [
     {
       possiblePositions: ["firstRow", "firstColumn", "firstDiagonal"],
-      ...mandatoryProps,
+      ...squareProps,
     },
     {
       possiblePositions: ["firstRow", "secondColumn"],
-      ...mandatoryProps,
+      ...squareProps,
     },
     {
       possiblePositions: ["firstRow", "thirdColumn", "secondDiagonal"],
-      ...mandatoryProps,
+      ...squareProps,
     },
     {
       possiblePositions: ["secondRow", "firstColumn"],
-      ...mandatoryProps,
+      ...squareProps,
     },
     {
       possiblePositions: [
@@ -135,23 +135,23 @@ const TicTacToe: React.FC = () => {
         "firstDiagonal",
         "secondDiagonal",
       ],
-      ...mandatoryProps,
+      ...squareProps,
     },
     {
       possiblePositions: ["secondRow", "thirdColumn"],
-      ...mandatoryProps,
+      ...squareProps,
     },
     {
       possiblePositions: ["thirdRow", "firstColumn", "secondDiagonal"],
-      ...mandatoryProps,
+      ...squareProps,
     },
     {
       possiblePositions: ["thirdRow", "secondColumn"],
-      ...mandatoryProps,
+      ...squareProps,
     },
     {
       possiblePositions: ["thirdRow", "thirdColumn", "firstDiagonal"],
-      ...mandatoryProps,
+      ...squareProps,
     },
   ];
 
