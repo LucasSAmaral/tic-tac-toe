@@ -98,10 +98,11 @@ const TicTacToeSquare: React.FC<TicTacToeSquareProps> = ({
   };
   return (
     <TicTacToeOptionWrapper
-      allTheSame={TicTacToeProps.allTheSame}
+      allTheSameCharacter={TicTacToeProps.allTheSameCharacter}
       possiblePositions={TicTacToeProps.possiblePositions}
       onClick={() =>
-        TicTacToeProps.allTheSame === "" && clickHandler(clickHandlerParams)
+        TicTacToeProps.allTheSameCharacter === "" &&
+        clickHandler(clickHandlerParams)
       }
     >
       <h2>{choosenCharacter}</h2>
@@ -110,7 +111,7 @@ const TicTacToeSquare: React.FC<TicTacToeSquareProps> = ({
 };
 
 const TicTacToeOptionWrapper = styled.div<{
-  allTheSame: PossiblePosition | "";
+  allTheSameCharacter: PossiblePosition | "";
   possiblePositions: PossiblePosition[];
 }>`
   cursor: pointer;
@@ -119,8 +120,8 @@ const TicTacToeOptionWrapper = styled.div<{
   align-items: center;
   height: 166px;
 
-  ${({ allTheSame, possiblePositions }) =>
-    allTheSame && possiblePositions.includes(allTheSame)
+  ${({ allTheSameCharacter, possiblePositions }) =>
+    allTheSameCharacter && possiblePositions.includes(allTheSameCharacter)
       ? css`
           background-color: green;
           color: white;
