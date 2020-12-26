@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useReducer, useEffect } from "react";
 import styled from "styled-components";
 import TicTacToeSquare from "./components/tic-tac-toe-square.component";
 
@@ -8,7 +8,7 @@ export type TicTacToeSquareProps = {
   turn: Turn;
   setTurn: React.Dispatch<React.SetStateAction<Turn>>;
   possiblePositions: PossiblePosition[];
-  allTheSame: PossiblePosition | "";
+  allTheSameCharacter: PossiblePosition | "";
   firstRow?: [] | Turn[];
   setFirstRow?: React.Dispatch<React.SetStateAction<[] | Turn[]>>;
   secondRow?: [] | Turn[];
@@ -41,6 +41,55 @@ const isAllTheSameValue = (array: Turn[]) => {
   return array.every((v) => v === array[0]);
 };
 
+type StateProps = { [key in PossiblePosition]: Turn[] | [] };
+
+type InitialStateProps = { [key in PossiblePosition]: [] };
+
+const initialState: InitialStateProps = {
+  firstRow: [],
+  secondRow: [],
+  thirdRow: [],
+  firstColumn: [],
+  secondColumn: [],
+  thirdColumn: [],
+  firstDiagonal: [],
+  secondDiagonal: [],
+};
+
+type ActionType = { type: PossiblePosition; payload: Turn };
+
+const reducer = (state: StateProps, action: ActionType): StateProps => {
+  switch (action.type) {
+    case "firstRow":
+      return { ...state, firstRow: [...state.firstRow, action.payload] };
+    case "secondRow":
+      return { ...state, secondRow: [...state.secondRow, action.payload] };
+    case "thirdRow":
+      return { ...state, thirdRow: [...state.thirdRow, action.payload] };
+    case "firstColumn":
+      return { ...state, firstColumn: [...state.firstColumn, action.payload] };
+    case "secondColumn":
+      return {
+        ...state,
+        secondColumn: [...state.secondColumn, action.payload],
+      };
+    case "thirdColumn":
+      return { ...state, thirdColumn: [...state.thirdColumn, action.payload] };
+    case "firstDiagonal":
+      return {
+        ...state,
+        firstDiagonal: [...state.firstDiagonal, action.payload],
+      };
+    case "secondDiagonal":
+      return {
+        ...state,
+        secondDiagonal: [...state.secondDiagonal, action.payload],
+      };
+    default:
+      return { ...state };
+  }
+};
+
 const TicTacToe: React.FC = () => {
   const [turn, setTurn] = useState<Turn>("X");
   const [firstRow, setFirstRow] = useState<Turn[] | []>([]);
@@ -51,12 +100,15 @@ const TicTacToe: React.FC = () => {
   const [thirdColumn, setThirdColumn] = useState<Turn[] | []>([]);
   const [firstDiagonal, setFirstDiagonal] = useState<Turn[] | []>([]);
   const [secondDiagonal, setSecondDiagonal] = useState<Turn[] | []>([]);
-  const [allTheSame, setAllTheSame] = useState<PossiblePosition | "">("");
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const [allTheSameCharacter, setAllTheSameCharacter] = useState<
+    PossiblePosition | ""
+  >("");
 
   useEffect(() => {
     if (firstRow.length === 3) {
       if (isAllTheSameValue(firstRow)) {
-        setAllTheSame("firstRow");
+        setAllTheSameCharacter("firstRow");
       }
     }
   }, [firstRow]);
@@ -64,7 +116,7 @@ const TicTacToe: React.FC = () => {
   useEffect(() => {
     if (secondRow.length === 3) {
       if (isAllTheSameValue(secondRow)) {
-        setAllTheSame("secondRow");
+        setAllTheSameCharacter("secondRow");
       }
     }
   }, [secondRow]);
@@ -72,7 +124,7 @@ const TicTacToe: React.FC = () => {
   useEffect(() => {
     if (thirdRow.length === 3) {
       if (isAllTheSameValue(thirdRow)) {
-        setAllTheSame("thirdRow");
+        setAllTheSameCharacter("thirdRow");
       }
     }
   }, [thirdRow]);
@@ -80,7 +132,7 @@ const TicTacToe: React.FC = () => {
   useEffect(() => {
     if (firstColumn.length === 3) {
       if (isAllTheSameValue(firstColumn)) {
-        setAllTheSame("firstColumn");
+        setAllTheSameCharacter("firstColumn");
       }
     }
   }, [firstColumn]);
@@ -88,7 +140,7 @@ const TicTacToe: React.FC = () => {
   useEffect(() => {
     if (secondColumn.length === 3) {
       if (isAllTheSameValue(secondColumn)) {
-        setAllTheSame("secondColumn");
+        setAllTheSameCharacter("secondColumn");
       }
     }
   }, [secondColumn]);
@@ -96,7 +148,7 @@ const TicTacToe: React.FC = () => {
   useEffect(() => {
     if (thirdColumn.length === 3) {
       if (isAllTheSameValue(thirdColumn)) {
-        setAllTheSame("thirdColumn");
+        setAllTheSameCharacter("thirdColumn");
       }
     }
   }, [thirdColumn]);
@@ -104,7 +156,7 @@ const TicTacToe: React.FC = () => {
   useEffect(() => {
     if (firstDiagonal.length === 3) {
       if (isAllTheSameValue(firstDiagonal)) {
-        setAllTheSame("firstDiagonal");
+        setAllTheSameCharacter("firstDiagonal");
       }
     }
   }, [firstDiagonal]);
@@ -112,7 +164,7 @@ const TicTacToe: React.FC = () => {
   useEffect(() => {
     if (secondDiagonal.length === 3) {
       if (isAllTheSameValue(secondDiagonal)) {
-        setAllTheSame("secondDiagonal");
+        setAllTheSameCharacter("secondDiagonal");
       }
     }
   }, [secondDiagonal]);
@@ -120,7 +172,7 @@ const TicTacToe: React.FC = () => {
   const mandatoryProps = {
     turn,
     setTurn,
-    allTheSame,
+    allTheSameCharacter,
   };
 
   const firstRowProps = {
