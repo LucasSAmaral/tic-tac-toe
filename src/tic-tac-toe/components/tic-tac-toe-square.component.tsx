@@ -13,61 +13,12 @@ type ClickHandlerObjectParam = {
 };
 
 const setPositionHandler = (TicTacToeProps: TicTacToeSquareProps) => {
-  if (TicTacToeProps.setFirstRow && TicTacToeProps.firstRow) {
-    TicTacToeProps.setFirstRow([
-      ...TicTacToeProps.firstRow,
-      TicTacToeProps.turn,
-    ]);
-  }
-
-  if (TicTacToeProps.setSecondRow && TicTacToeProps.secondRow) {
-    TicTacToeProps.setSecondRow([
-      ...TicTacToeProps.secondRow,
-      TicTacToeProps.turn,
-    ]);
-  }
-
-  if (TicTacToeProps.setThirdRow && TicTacToeProps.thirdRow) {
-    TicTacToeProps.setThirdRow([
-      ...TicTacToeProps.thirdRow,
-      TicTacToeProps.turn,
-    ]);
-  }
-
-  if (TicTacToeProps.setFirstColumn && TicTacToeProps.firstColumn) {
-    TicTacToeProps.setFirstColumn([
-      ...TicTacToeProps.firstColumn,
-      TicTacToeProps.turn,
-    ]);
-  }
-
-  if (TicTacToeProps.setSecondColumn && TicTacToeProps.secondColumn) {
-    TicTacToeProps.setSecondColumn([
-      ...TicTacToeProps.secondColumn,
-      TicTacToeProps.turn,
-    ]);
-  }
-
-  if (TicTacToeProps.setThirdColumn && TicTacToeProps.thirdColumn) {
-    TicTacToeProps.setThirdColumn([
-      ...TicTacToeProps.thirdColumn,
-      TicTacToeProps.turn,
-    ]);
-  }
-
-  if (TicTacToeProps.setFirstDiagonal && TicTacToeProps.firstDiagonal) {
-    TicTacToeProps.setFirstDiagonal([
-      ...TicTacToeProps.firstDiagonal,
-      TicTacToeProps.turn,
-    ]);
-  }
-
-  if (TicTacToeProps.setSecondDiagonal && TicTacToeProps.secondDiagonal) {
-    TicTacToeProps.setSecondDiagonal([
-      ...TicTacToeProps.secondDiagonal,
-      TicTacToeProps.turn,
-    ]);
-  }
+  TicTacToeProps.possiblePositions.map((possiblePosition) =>
+    TicTacToeProps.dispatch({
+      type: possiblePosition,
+      payload: TicTacToeProps.turn,
+    })
+  );
 };
 
 const clickHandler = ({
