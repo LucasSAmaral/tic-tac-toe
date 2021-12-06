@@ -29,3 +29,10 @@ type PossiblePosition =
     setChoosenCharacter: React.Dispatch<React.SetStateAction<Turn | "">>;
     TicTacToeProps: TicTacToeSquareProps;
   };
+
+  type SquareProps = {
+    turn: Turn;
+    setTurn: React.Dispatch<React.SetStateAction<Turn>>;
+    dispatch: React.Dispatch<ActionType>;
+    allTheSameCharacter: "" | PossiblePosition;
+  }

@@ -1,7 +1,7 @@
 import { useState, useReducer, useEffect } from "react";
 import styled from "styled-components";
 import TicTacToeSquare from "./components/tic-tac-toe-square.component";
-import { isAllTheSameValue } from "./handlers/tic-tac-toe.handlers";
+import { buildTicTacToeSquares, isAllTheSameValue } from "./handlers/tic-tac-toe.handlers";
 import { initialState, reducer } from "./tic-tac-toe.reducer";
 
 const positions: PossiblePosition[] = [
@@ -40,49 +40,7 @@ const TicTacToe: React.FC = () => {
     allTheSameCharacter,
   };
 
-  const ticTacToeSquares: TicTacToeSquareProps[] = [
-    {
-      possiblePositions: ["firstRow", "firstColumn", "firstDiagonal"],
-      ...squareProps,
-    },
-    {
-      possiblePositions: ["firstRow", "secondColumn"],
-      ...squareProps,
-    },
-    {
-      possiblePositions: ["firstRow", "thirdColumn", "secondDiagonal"],
-      ...squareProps,
-    },
-    {
-      possiblePositions: ["secondRow", "firstColumn"],
-      ...squareProps,
-    },
-    {
-      possiblePositions: [
-        "secondRow",
-        "secondColumn",
-        "firstDiagonal",
-        "secondDiagonal",
-      ],
-      ...squareProps,
-    },
-    {
-      possiblePositions: ["secondRow", "thirdColumn"],
-      ...squareProps,
-    },
-    {
-      possiblePositions: ["thirdRow", "firstColumn", "secondDiagonal"],
-      ...squareProps,
-    },
-    {
-      possiblePositions: ["thirdRow", "secondColumn"],
-      ...squareProps,
-    },
-    {
-      possiblePositions: ["thirdRow", "thirdColumn", "firstDiagonal"],
-      ...squareProps,
-    },
-  ];
+  const ticTacToeSquares = buildTicTacToeSquares(squareProps);
 
   return (
     <TicTacToeWrapper>

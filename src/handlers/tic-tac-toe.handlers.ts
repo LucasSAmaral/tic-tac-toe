@@ -27,3 +27,49 @@ const setPositionHandler = (TicTacToeProps: TicTacToeSquareProps) => {
       setPositionHandler(TicTacToeProps);
     }
   };
+
+  export const buildTicTacToeSquares = (squareProps: SquareProps): TicTacToeSquareProps[] => {
+    return [
+      {
+        possiblePositions: ["firstRow", "firstColumn", "firstDiagonal"],
+        ...squareProps,
+      },
+      {
+        possiblePositions: ["firstRow", "secondColumn"],
+        ...squareProps,
+      },
+      {
+        possiblePositions: ["firstRow", "thirdColumn", "secondDiagonal"],
+        ...squareProps,
+      },
+      {
+        possiblePositions: ["secondRow", "firstColumn"],
+        ...squareProps,
+      },
+      {
+        possiblePositions: [
+          "secondRow",
+          "secondColumn",
+          "firstDiagonal",
+          "secondDiagonal",
+        ],
+        ...squareProps,
+      },
+      {
+        possiblePositions: ["secondRow", "thirdColumn"],
+        ...squareProps,
+      },
+      {
+        possiblePositions: ["thirdRow", "firstColumn", "secondDiagonal"],
+        ...squareProps,
+      },
+      {
+        possiblePositions: ["thirdRow", "secondColumn"],
+        ...squareProps,
+      },
+      {
+        possiblePositions: ["thirdRow", "thirdColumn", "firstDiagonal"],
+        ...squareProps,
+      },
+    ]
+  }
