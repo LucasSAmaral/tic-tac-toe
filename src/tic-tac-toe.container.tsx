@@ -1,6 +1,7 @@
 import { useState, useReducer, useEffect } from "react";
 import styled from "styled-components";
 import TicTacToeSquare from "./components/tic-tac-toe-square.component";
+import { isAllTheSameValue } from "./handlers/tic-tac-toe.handlers";
 
 const positions: PossiblePosition[] = [
   "firstRow",
@@ -22,10 +23,6 @@ const initialState: InitialStateProps = {
   thirdColumn: [],
   firstDiagonal: [],
   secondDiagonal: [],
-};
-
-const isAllTheSameValue = (array: Turn[]) => {
-  return array.every((v) => v === array[0]);
 };
 
 const reducer = (state: StateProps, action: ActionType): StateProps => {

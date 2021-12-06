@@ -1,31 +1,6 @@
 import { useState } from "react";
 import styled, { css } from "styled-components";
-
-const setPositionHandler = (TicTacToeProps: TicTacToeSquareProps) => {
-  TicTacToeProps.possiblePositions.map((possiblePosition) =>
-    TicTacToeProps.dispatch({
-      type: possiblePosition,
-      payload: TicTacToeProps.turn,
-    })
-  );
-};
-
-const clickHandler = ({
-  choosenCharacter,
-  setChoosenCharacter,
-  TicTacToeProps,
-}: ClickHandlerObjectParam) => {
-  if (choosenCharacter === "") {
-    if (TicTacToeProps.turn === "X") {
-      setChoosenCharacter("X");
-      TicTacToeProps.setTurn("O");
-    } else {
-      setChoosenCharacter("O");
-      TicTacToeProps.setTurn("X");
-    }
-    setPositionHandler(TicTacToeProps);
-  }
-};
+import { clickHandler } from "../handlers/tic-tac-toe.handlers";
 
 const TicTacToeSquare: React.FC<TicTacToeSquareProps> = ({
   ...TicTacToeProps
