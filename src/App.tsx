@@ -1,4 +1,4 @@
-import TicTacToe from "./tic-tac-toe/tic-tac-toe.container";
+import TicTacToe from "./tic-tac-toe.container";
 
 function App() {
   return <TicTacToe />;

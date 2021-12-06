@@ -1,30 +1,8 @@
 import { useState, useReducer, useEffect } from "react";
 import styled from "styled-components";
 import TicTacToeSquare from "./components/tic-tac-toe-square.component";
-
-export type Turn = "X" | "O";
-
-export type TicTacToeSquareProps = {
-  turn: Turn;
-  setTurn: React.Dispatch<React.SetStateAction<Turn>>;
-  dispatch: React.Dispatch<ActionType>;
-  possiblePositions: PossiblePosition[];
-  allTheSameCharacter: PossiblePosition | "";
-};
-
-export type PossiblePosition =
-  | "firstRow"
-  | "secondRow"
-  | "thirdRow"
-  | "firstColumn"
-  | "secondColumn"
-  | "thirdColumn"
-  | "firstDiagonal"
-  | "secondDiagonal";
-
-type StateProps = { [key in PossiblePosition]: Turn[] | [] };
-
-type InitialStateProps = { [key in PossiblePosition]: [] };
+import { isAllTheSameValue } from "./handlers/tic-tac-toe.handlers";
+import { initialState, reducer } from "./tic-tac-toe.reducer";
 
 const positions: PossiblePosition[] = [
   "firstRow",
@@ -36,55 +14,6 @@ const positions: PossiblePosition[] = [
   "firstDiagonal",
   "secondDiagonal",
 ];
-
-const initialState: InitialStateProps = {
-  firstRow: [],
-  secondRow: [],
-  thirdRow: [],
-  firstColumn: [],
-  secondColumn: [],
-  thirdColumn: [],
-  firstDiagonal: [],
-  secondDiagonal: [],
-};
-
-type ActionType = { type: PossiblePosition; payload: Turn };
-
-const isAllTheSameValue = (array: Turn[]) => {
-  return array.every((v) => v === array[0]);
-};
-
-const reducer = (state: StateProps, action: ActionType): StateProps => {
-  switch (action.type) {
-    case "firstRow":
-      return { ...state, firstRow: [...state.firstRow, action.payload] };
-    case "secondRow":
-      return { ...state, secondRow: [...state.secondRow, action.payload] };
-    case "thirdRow":
-      return { ...state, thirdRow: [...state.thirdRow, action.payload] };
-    case "firstColumn":
-      return { ...state, firstColumn: [...state.firstColumn, action.payload] };
-    case "secondColumn":
-      return {
-        ...state,
-        secondColumn: [...state.secondColumn, action.payload],
-      };
-    case "thirdColumn":
-      return { ...state, thirdColumn: [...state.thirdColumn, action.payload] };
-    case "firstDiagonal":
-      return {
-        ...state,
-        firstDiagonal: [...state.firstDiagonal, action.payload],
-      };
-    case "secondDiagonal":
-      return {
-        ...state,
-        secondDiagonal: [...state.secondDiagonal, action.payload],
-      };
-    default:
-      return { ...state };
-  }
-};
 
 const TicTacToe: React.FC = () => {
   const [turn, setTurn] = useState<Turn>("X");
