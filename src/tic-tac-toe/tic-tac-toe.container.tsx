@@ -2,30 +2,6 @@ import { useState, useReducer, useEffect } from "react";
 import styled from "styled-components";
 import TicTacToeSquare from "./components/tic-tac-toe-square.component";
 
-export type Turn = "X" | "O";
-
-export type TicTacToeSquareProps = {
-  turn: Turn;
-  setTurn: React.Dispatch<React.SetStateAction<Turn>>;
-  dispatch: React.Dispatch<ActionType>;
-  possiblePositions: PossiblePosition[];
-  allTheSameCharacter: PossiblePosition | "";
-};
-
-export type PossiblePosition =
-  | "firstRow"
-  | "secondRow"
-  | "thirdRow"
-  | "firstColumn"
-  | "secondColumn"
-  | "thirdColumn"
-  | "firstDiagonal"
-  | "secondDiagonal";
-
-type StateProps = { [key in PossiblePosition]: Turn[] | [] };
-
-type InitialStateProps = { [key in PossiblePosition]: [] };
-
 const positions: PossiblePosition[] = [
   "firstRow",
   "secondRow",
@@ -47,8 +23,6 @@ const initialState: InitialStateProps = {
   firstDiagonal: [],
   secondDiagonal: [],
 };
-
-type ActionType = { type: PossiblePosition; payload: Turn };
 
 const isAllTheSameValue = (array: Turn[]) => {
   return array.every((v) => v === array[0]);

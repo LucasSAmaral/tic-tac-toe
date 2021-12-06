@@ -1,16 +1,5 @@
 import { useState } from "react";
 import styled, { css } from "styled-components";
-import {
-  PossiblePosition,
-  TicTacToeSquareProps,
-  Turn,
-} from "../tic-tac-toe.container";
-
-type ClickHandlerObjectParam = {
-  choosenCharacter: Turn | "";
-  setChoosenCharacter: React.Dispatch<React.SetStateAction<Turn | "">>;
-  TicTacToeProps: TicTacToeSquareProps;
-};
 
 const setPositionHandler = (TicTacToeProps: TicTacToeSquareProps) => {
   TicTacToeProps.possiblePositions.map((possiblePosition) =>
