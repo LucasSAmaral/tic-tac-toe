@@ -1,7 +1,10 @@
 import { useState, useReducer, useEffect } from "react";
 import styled from "styled-components";
 import TicTacToeSquare from "./components/tic-tac-toe-square.component";
-import { buildTicTacToeSquares, isAllTheSameValue } from "./handlers/tic-tac-toe.handlers";
+import {
+  buildTicTacToeSquares,
+  isAllTheSameValue,
+} from "./handlers/tic-tac-toe.handlers";
 import { initialState, reducer } from "./tic-tac-toe.reducer";
 
 const positions: PossiblePosition[] = [
